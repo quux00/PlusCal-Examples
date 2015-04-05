@@ -1,0 +1,476 @@
+@!@!@STARTMSG 2262:0 @!@!@
+TLC2 Version 2.05 of 23 July 2013
+@!@!@ENDMSG 2262 @!@!@
+@!@!@STARTMSG 2187:0 @!@!@
+Running in Model-Checking mode.
+@!@!@ENDMSG 2187 @!@!@
+@!@!@STARTMSG 2220:0 @!@!@
+Starting SANY...
+@!@!@ENDMSG 2220 @!@!@
+Parsing file MC.tla
+Parsing file FastMutex.tla
+Parsing file /home/midpeter444/apps/TLAToolbox-1.4.8/plugins/org.lamport.tlatools_1.0.0.201403132202/tla2sany/StandardModules/TLC.tla
+Parsing file /home/midpeter444/apps/TLAToolbox-1.4.8/plugins/org.lamport.tlatools_1.0.0.201403132202/tla2sany/StandardModules/Naturals.tla
+Parsing file /home/midpeter444/apps/TLAToolbox-1.4.8/plugins/org.lamport.tlatools_1.0.0.201403132202/tla2sany/StandardModules/Sequences.tla
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module TLC
+Semantic processing of module FastMutex
+Semantic processing of module MC
+@!@!@STARTMSG 2219:0 @!@!@
+SANY finished.
+@!@!@ENDMSG 2219 @!@!@
+@!@!@STARTMSG 2185:0 @!@!@
+Starting... (2015-04-04 18:08:10)
+@!@!@ENDMSG 2185 @!@!@
+@!@!@STARTMSG 2189:0 @!@!@
+Computing initial states...
+@!@!@ENDMSG 2189 @!@!@
+@!@!@STARTMSG 2190:0 @!@!@
+Finished computing initial states: 1 distinct state generated.
+@!@!@ENDMSG 2190 @!@!@
+@!@!@STARTMSG 1000:1 @!@!@
+TLC threw an unexpected exception.
+This was probably caused by an error in the spec or model.
+See the User Output or TLC Console for clues to what happened.
+The exception was a tlc2.tool.EvalException: @!@!@STARTMSG 2154:0 @!@!@
+Attempted to apply the operator overridden by the Java method
+public static tlc2.value.Value tlc2.module.TLC.Assert(tlc2.value.Value,tlc2.value.Value),
+but it produced the following error:
+@!@!@STARTMSG 2132:0 @!@!@
+The first argument of Assert evaluated to FALSE; the second argument was:
+"Failure of assertion at line 41, column 14."
+@!@!@ENDMSG 2132 @!@!@
+@!@!@ENDMSG 2154 @!@!@
+@!@!@ENDMSG 1000 @!@!@
+@!@!@STARTMSG 2121:1 @!@!@
+The behavior up to this point is:
+@!@!@ENDMSG 2121 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+1: <Initial predicate>
+/\ b = <<FALSE, FALSE, FALSE, FALSE>>
+/\ j = <<defaultInitValue, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = defaultInitValue
+/\ y = 0
+/\ pc = <<"ncs", "ncs", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+2: <Action line 65, col 14 to line 68, col 42 of module FastMutex>
+/\ b = <<FALSE, FALSE, FALSE, FALSE>>
+/\ j = <<defaultInitValue, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = defaultInitValue
+/\ y = 0
+/\ pc = <<"start", "ncs", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+3: <Action line 70, col 16 to line 73, col 41 of module FastMutex>
+/\ b = <<TRUE, FALSE, FALSE, FALSE>>
+/\ j = <<defaultInitValue, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = defaultInitValue
+/\ y = 0
+/\ pc = <<"s01", "ncs", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+4: <Action line 75, col 14 to line 78, col 39 of module FastMutex>
+/\ b = <<TRUE, FALSE, FALSE, FALSE>>
+/\ j = <<defaultInitValue, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = 1
+/\ y = 0
+/\ pc = <<"s02", "ncs", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+5: <Action line 65, col 14 to line 68, col 42 of module FastMutex>
+/\ b = <<TRUE, FALSE, FALSE, FALSE>>
+/\ j = <<defaultInitValue, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = 1
+/\ y = 0
+/\ pc = <<"s02", "start", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+6: <Action line 80, col 14 to line 84, col 42 of module FastMutex>
+/\ b = <<TRUE, FALSE, FALSE, FALSE>>
+/\ j = <<defaultInitValue, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = 1
+/\ y = 0
+/\ pc = <<"s05", "start", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+7: <Action line 70, col 16 to line 73, col 41 of module FastMutex>
+/\ b = <<TRUE, TRUE, FALSE, FALSE>>
+/\ j = <<defaultInitValue, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = 1
+/\ y = 0
+/\ pc = <<"s05", "s01", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+8: <Action line 75, col 14 to line 78, col 39 of module FastMutex>
+/\ b = <<TRUE, TRUE, FALSE, FALSE>>
+/\ j = <<defaultInitValue, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = 2
+/\ y = 0
+/\ pc = <<"s05", "s02", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+9: <Action line 80, col 14 to line 84, col 42 of module FastMutex>
+/\ b = <<TRUE, TRUE, FALSE, FALSE>>
+/\ j = <<defaultInitValue, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = 2
+/\ y = 0
+/\ pc = <<"s05", "s05", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+10: <Action line 96, col 14 to line 99, col 39 of module FastMutex>
+/\ b = <<TRUE, TRUE, FALSE, FALSE>>
+/\ j = <<defaultInitValue, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = 2
+/\ y = 1
+/\ pc = <<"s06", "s05", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+11: <Action line 101, col 14 to line 105, col 42 of module FastMutex>
+/\ b = <<TRUE, TRUE, FALSE, FALSE>>
+/\ j = <<defaultInitValue, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = 2
+/\ y = 1
+/\ pc = <<"s07", "s05", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+12: <Action line 107, col 14 to line 111, col 36 of module FastMutex>
+/\ b = <<FALSE, TRUE, FALSE, FALSE>>
+/\ j = <<1, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = 2
+/\ y = 1
+/\ pc = <<"s08", "s05", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+13: <Action line 113, col 14 to line 120, col 39 of module FastMutex>
+/\ b = <<FALSE, TRUE, FALSE, FALSE>>
+/\ j = <<3, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = 2
+/\ y = 1
+/\ pc = <<"s08", "s05", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+14: <Action line 113, col 14 to line 120, col 39 of module FastMutex>
+/\ b = <<FALSE, TRUE, FALSE, FALSE>>
+/\ j = <<5, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = 2
+/\ y = 1
+/\ pc = <<"s08", "s05", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+15: <Action line 113, col 14 to line 120, col 39 of module FastMutex>
+/\ b = <<FALSE, TRUE, FALSE, FALSE>>
+/\ j = <<5, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = 2
+/\ y = 1
+/\ pc = <<"s09", "s05", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+16: <Action line 122, col 14 to line 126, col 42 of module FastMutex>
+/\ b = <<FALSE, TRUE, FALSE, FALSE>>
+/\ j = <<5, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = 2
+/\ y = 1
+/\ pc = <<"cs", "s05", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+17: <Action line 96, col 14 to line 99, col 39 of module FastMutex>
+/\ b = <<FALSE, TRUE, FALSE, FALSE>>
+/\ j = <<5, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = 2
+/\ y = 2
+/\ pc = <<"cs", "s06", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+18: <Action line 101, col 14 to line 105, col 42 of module FastMutex>
+/\ b = <<FALSE, TRUE, FALSE, FALSE>>
+/\ j = <<5, defaultInitValue, defaultInitValue, defaultInitValue>>
+/\ x = 2
+/\ y = 2
+/\ pc = <<"cs", "cs", "ncs", "ncs">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2103:1 @!@!@
+The error occurred when TLC was evaluating the nested
+expressions at the following positions:
+0. Line 133, column 16 to line 133, column 30 in FastMutex
+1. Line 134, column 16 to line 135, column 68 in FastMutex
+
+
+@!@!@ENDMSG 2103 @!@!@
+@!@!@STARTMSG 2201:0 @!@!@
+The coverage statistics at 2015-04-04 18:08:11
+@!@!@ENDMSG 2201 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 103, col 28 to line 103, col 60 of module FastMutex: 5704
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 104, col 28 to line 104, col 59 of module FastMutex: 3323
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 105, col 30 to line 105, col 30 of module FastMutex: 9027
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 105, col 33 to line 105, col 33 of module FastMutex: 9027
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 105, col 36 to line 105, col 36 of module FastMutex: 9027
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 105, col 39 to line 105, col 39 of module FastMutex: 9027
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 108, col 17 to line 108, col 47 of module FastMutex: 3640
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 109, col 17 to line 109, col 43 of module FastMutex: 3640
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 110, col 17 to line 110, col 49 of module FastMutex: 3640
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 111, col 30 to line 111, col 30 of module FastMutex: 3640
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 111, col 33 to line 111, col 33 of module FastMutex: 3640
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 116, col 28 to line 116, col 62 of module FastMutex: 1639
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 117, col 28 to line 117, col 60 of module FastMutex: 1639
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 118, col 28 to line 118, col 60 of module FastMutex: 325
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 119, col 28 to line 119, col 33 of module FastMutex: 325
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 120, col 30 to line 120, col 30 of module FastMutex: 1964
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 120, col 33 to line 120, col 33 of module FastMutex: 1964
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 120, col 36 to line 120, col 36 of module FastMutex: 1964
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 124, col 28 to line 124, col 60 of module FastMutex: 17
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 125, col 28 to line 125, col 59 of module FastMutex: 151
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 126, col 30 to line 126, col 30 of module FastMutex: 168
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 126, col 33 to line 126, col 33 of module FastMutex: 168
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 126, col 36 to line 126, col 36 of module FastMutex: 168
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 126, col 39 to line 126, col 39 of module FastMutex: 168
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 130, col 17 to line 130, col 51 of module FastMutex: 0
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 131, col 30 to line 131, col 30 of module FastMutex: 0
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 131, col 33 to line 131, col 33 of module FastMutex: 0
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 131, col 36 to line 131, col 36 of module FastMutex: 0
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 131, col 39 to line 131, col 39 of module FastMutex: 0
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 136, col 16 to line 136, col 48 of module FastMutex: 4041
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 137, col 29 to line 137, col 29 of module FastMutex: 4041
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 137, col 32 to line 137, col 32 of module FastMutex: 4041
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 137, col 35 to line 137, col 35 of module FastMutex: 4041
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 137, col 38 to line 137, col 38 of module FastMutex: 4041
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 140, col 17 to line 140, col 22 of module FastMutex: 2711
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 141, col 17 to line 141, col 49 of module FastMutex: 2711
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 142, col 30 to line 142, col 30 of module FastMutex: 2711
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 142, col 33 to line 142, col 33 of module FastMutex: 2711
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 142, col 36 to line 142, col 36 of module FastMutex: 2711
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 145, col 17 to line 145, col 47 of module FastMutex: 2314
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 146, col 17 to line 146, col 49 of module FastMutex: 2314
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 147, col 30 to line 147, col 30 of module FastMutex: 2314
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 147, col 33 to line 147, col 33 of module FastMutex: 2314
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 147, col 36 to line 147, col 36 of module FastMutex: 2314
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 67, col 17 to line 67, col 51 of module FastMutex: 13887
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 68, col 30 to line 68, col 30 of module FastMutex: 13887
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 68, col 33 to line 68, col 33 of module FastMutex: 13887
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 68, col 36 to line 68, col 36 of module FastMutex: 13887
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 68, col 39 to line 68, col 39 of module FastMutex: 13887
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 71, col 19 to line 71, col 48 of module FastMutex: 10836
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 72, col 19 to line 72, col 51 of module FastMutex: 10836
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 73, col 32 to line 73, col 32 of module FastMutex: 10836
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 73, col 35 to line 73, col 35 of module FastMutex: 10836
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 73, col 38 to line 73, col 38 of module FastMutex: 10836
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 76, col 17 to line 76, col 25 of module FastMutex: 8450
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 77, col 17 to line 77, col 49 of module FastMutex: 8450
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 78, col 30 to line 78, col 30 of module FastMutex: 8450
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 78, col 33 to line 78, col 33 of module FastMutex: 8450
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 78, col 36 to line 78, col 36 of module FastMutex: 8450
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 82, col 28 to line 82, col 60 of module FastMutex: 7772
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 83, col 28 to line 83, col 60 of module FastMutex: 2336
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 84, col 30 to line 84, col 30 of module FastMutex: 10108
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 84, col 33 to line 84, col 33 of module FastMutex: 10108
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 84, col 36 to line 84, col 36 of module FastMutex: 10108
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 84, col 39 to line 84, col 39 of module FastMutex: 10108
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 87, col 17 to line 87, col 47 of module FastMutex: 6194
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 88, col 17 to line 88, col 49 of module FastMutex: 6194
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 89, col 30 to line 89, col 30 of module FastMutex: 6194
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 89, col 33 to line 89, col 33 of module FastMutex: 6194
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 89, col 36 to line 89, col 36 of module FastMutex: 6194
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 93, col 17 to line 93, col 51 of module FastMutex: 422
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 94, col 30 to line 94, col 30 of module FastMutex: 422
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 94, col 33 to line 94, col 33 of module FastMutex: 422
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 94, col 36 to line 94, col 36 of module FastMutex: 422
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 94, col 39 to line 94, col 39 of module FastMutex: 422
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 97, col 17 to line 97, col 25 of module FastMutex: 6085
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 98, col 17 to line 98, col 49 of module FastMutex: 6085
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 99, col 30 to line 99, col 30 of module FastMutex: 6085
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 99, col 33 to line 99, col 33 of module FastMutex: 6085
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 99, col 36 to line 99, col 36 of module FastMutex: 6085
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2202:0 @!@!@
+End of statistics.
+@!@!@ENDMSG 2202 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(19) at 2015-04-04 18:08:11: 79848 states generated (4,473,277 s/min), 29974 distinct states found (1,679,215 ds/min), 8792 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2199:0 @!@!@
+79848 states generated, 29974 distinct states found, 8792 states left on queue.
+@!@!@ENDMSG 2199 @!@!@
+@!@!@STARTMSG 2194:0 @!@!@
+The depth of the complete state graph search is 19.
+@!@!@ENDMSG 2194 @!@!@
+@!@!@STARTMSG 2186:0 @!@!@
+Finished. (2015-04-04 18:08:11)
+@!@!@ENDMSG 2186 @!@!@

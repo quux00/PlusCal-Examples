@@ -1,0 +1,25 @@
+@!@!@STARTMSG 2262:0 @!@!@
+TLC2 Version 2.05 of 23 July 2013
+@!@!@ENDMSG 2262 @!@!@
+@!@!@STARTMSG 2188:0 @!@!@
+Running Random Simulation with seed -5843496747848296339.
+@!@!@ENDMSG 2188 @!@!@
+@!@!@STARTMSG 2220:0 @!@!@
+Starting SANY...
+@!@!@ENDMSG 2220 @!@!@
+Parsing file MC.tla
+Parsing file Euclid.tla
+Parsing file /home/midpeter444/apps/TLAToolbox-1.4.8/plugins/org.lamport.tlatools_1.0.0.201403132202/tla2sany/StandardModules/TLC.tla
+Parsing file /home/midpeter444/apps/TLAToolbox-1.4.8/plugins/org.lamport.tlatools_1.0.0.201403132202/tla2sany/StandardModules/Naturals.tla
+Parsing file /home/midpeter444/apps/TLAToolbox-1.4.8/plugins/org.lamport.tlatools_1.0.0.201403132202/tla2sany/StandardModules/Sequences.tla
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module TLC
+Semantic processing of module Euclid
+Semantic processing of module MC
+@!@!@STARTMSG 2219:0 @!@!@
+SANY finished.
+@!@!@ENDMSG 2219 @!@!@
+@!@!@STARTMSG 2185:0 @!@!@
+Starting... (2015-04-03 22:15:37)
+@!@!@ENDMSG 2185 @!@!@

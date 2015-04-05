@@ -1,0 +1,239 @@
+@!@!@STARTMSG 2262:0 @!@!@
+TLC2 Version 2.05 of 23 July 2013
+@!@!@ENDMSG 2262 @!@!@
+@!@!@STARTMSG 2187:0 @!@!@
+Running in Model-Checking mode.
+@!@!@ENDMSG 2187 @!@!@
+@!@!@STARTMSG 2220:0 @!@!@
+Starting SANY...
+@!@!@ENDMSG 2220 @!@!@
+Parsing file MC.tla
+Parsing file TwoPhaseCommit.tla
+Parsing file /home/midpeter444/apps/TLAToolbox-1.4.8/plugins/org.lamport.tlatools_1.0.0.201403132202/tla2sany/StandardModules/TLC.tla
+Parsing file /home/midpeter444/apps/TLAToolbox-1.4.8/plugins/org.lamport.tlatools_1.0.0.201403132202/tla2sany/StandardModules/Naturals.tla
+Parsing file /home/midpeter444/apps/TLAToolbox-1.4.8/plugins/org.lamport.tlatools_1.0.0.201403132202/tla2sany/StandardModules/Sequences.tla
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module TLC
+Semantic processing of module TwoPhaseCommit
+Semantic processing of module MC
+@!@!@STARTMSG 2219:0 @!@!@
+SANY finished.
+@!@!@ENDMSG 2219 @!@!@
+@!@!@STARTMSG 2185:0 @!@!@
+Starting... (2015-04-04 21:08:56)
+@!@!@ENDMSG 2185 @!@!@
+@!@!@STARTMSG 2189:0 @!@!@
+Computing initial states...
+@!@!@ENDMSG 2189 @!@!@
+@!@!@STARTMSG 2190:0 @!@!@
+Finished computing initial states: 1 distinct state generated.
+@!@!@ENDMSG 2190 @!@!@
+@!@!@STARTMSG 2193:0 @!@!@
+Model checking completed. No error has been found.
+  Estimates of the probability that TLC did not check all reachable states
+  because two distinct states had the same fingerprint:
+  calculated (optimistic):  val = 8.3E-15
+  based on the actual fingerprints:  val = 1.3E-12
+@!@!@ENDMSG 2193 @!@!@
+@!@!@STARTMSG 2201:0 @!@!@
+The coverage statistics at 2015-04-04 21:08:56
+@!@!@ENDMSG 2201 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 100, col 10 to line 100, col 44 of module TwoPhaseCommit: 1
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 101, col 23 to line 101, col 30 of module TwoPhaseCommit: 1
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 101, col 33 to line 101, col 48 of module TwoPhaseCommit: 1
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 101, col 51 to line 101, col 57 of module TwoPhaseCommit: 1
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 106, col 26 to line 106, col 88 of module TwoPhaseCommit: 48
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 107, col 26 to line 107, col 50 of module TwoPhaseCommit: 48
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 108, col 21 to line 108, col 55 of module TwoPhaseCommit: 48
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 109, col 21 to line 109, col 55 of module TwoPhaseCommit: 27
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 110, col 34 to line 110, col 49 of module TwoPhaseCommit: 27
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 110, col 52 to line 110, col 58 of module TwoPhaseCommit: 27
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 111, col 23 to line 111, col 30 of module TwoPhaseCommit: 75
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 111, col 33 to line 111, col 39 of module TwoPhaseCommit: 75
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 114, col 10 to line 114, col 28 of module TwoPhaseCommit: 27
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 115, col 10 to line 115, col 44 of module TwoPhaseCommit: 27
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 116, col 23 to line 116, col 30 of module TwoPhaseCommit: 27
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 116, col 33 to line 116, col 48 of module TwoPhaseCommit: 27
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 116, col 51 to line 116, col 57 of module TwoPhaseCommit: 27
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 123, col 37 to line 123, col 51 of module TwoPhaseCommit: 75
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 125, col 47 to line 125, col 53 of module TwoPhaseCommit: 75
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 126, col 26 to line 126, col 49 of module TwoPhaseCommit: 150
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 127, col 21 to line 127, col 55 of module TwoPhaseCommit: 150
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 128, col 21 to line 128, col 39 of module TwoPhaseCommit: 8
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 130, col 32 to line 130, col 66 of module TwoPhaseCommit: 7
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 131, col 32 to line 131, col 66 of module TwoPhaseCommit: 1
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 132, col 31 to line 132, col 37 of module TwoPhaseCommit: 8
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 133, col 23 to line 133, col 30 of module TwoPhaseCommit: 158
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 133, col 33 to line 133, col 48 of module TwoPhaseCommit: 158
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 138, col 26 to line 138, col 86 of module TwoPhaseCommit: 93
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 139, col 26 to line 139, col 50 of module TwoPhaseCommit: 93
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 140, col 21 to line 140, col 55 of module TwoPhaseCommit: 93
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 141, col 21 to line 141, col 57 of module TwoPhaseCommit: 8
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 142, col 34 to line 142, col 49 of module TwoPhaseCommit: 8
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 142, col 52 to line 142, col 58 of module TwoPhaseCommit: 8
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 143, col 23 to line 143, col 30 of module TwoPhaseCommit: 101
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 143, col 33 to line 143, col 39 of module TwoPhaseCommit: 101
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 148, col 26 to line 148, col 87 of module TwoPhaseCommit: 27
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 149, col 26 to line 149, col 50 of module TwoPhaseCommit: 27
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 150, col 21 to line 150, col 55 of module TwoPhaseCommit: 27
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 151, col 21 to line 151, col 57 of module TwoPhaseCommit: 8
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 152, col 34 to line 152, col 49 of module TwoPhaseCommit: 8
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 152, col 52 to line 152, col 58 of module TwoPhaseCommit: 8
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 153, col 23 to line 153, col 30 of module TwoPhaseCommit: 35
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 153, col 33 to line 153, col 39 of module TwoPhaseCommit: 35
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 67, col 12 to line 67, col 19 of module TwoPhaseCommit: 2
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 67, col 22 to line 67, col 37 of module TwoPhaseCommit: 2
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 67, col 40 to line 67, col 41 of module TwoPhaseCommit: 2
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 67, col 44 to line 67, col 50 of module TwoPhaseCommit: 2
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 67, col 53 to line 67, col 59 of module TwoPhaseCommit: 2
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 82, col 22 to line 82, col 85 of module TwoPhaseCommit: 150
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 83, col 22 to line 83, col 85 of module TwoPhaseCommit: 150
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 84, col 16 to line 84, col 47 of module TwoPhaseCommit: 300
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 85, col 29 to line 85, col 36 of module TwoPhaseCommit: 300
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 85, col 39 to line 85, col 45 of module TwoPhaseCommit: 300
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 85, col 48 to line 85, col 54 of module TwoPhaseCommit: 300
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 91, col 27 to line 91, col 93 of module TwoPhaseCommit: 39
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 92, col 27 to line 92, col 91 of module TwoPhaseCommit: 60
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 93, col 16 to line 93, col 49 of module TwoPhaseCommit: 99
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 94, col 29 to line 94, col 36 of module TwoPhaseCommit: 99
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 94, col 39 to line 94, col 45 of module TwoPhaseCommit: 99
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 94, col 48 to line 94, col 54 of module TwoPhaseCommit: 99
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 99, col 10 to line 99, col 28 of module TwoPhaseCommit: 1
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2202:0 @!@!@
+End of statistics.
+@!@!@ENDMSG 2202 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(21) at 2015-04-04 21:08:56: 799 states generated (428,035 s/min), 323 distinct states found (173,035 ds/min), 0 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2199:0 @!@!@
+799 states generated, 323 distinct states found, 0 states left on queue.
+@!@!@ENDMSG 2199 @!@!@
+@!@!@STARTMSG 2194:0 @!@!@
+The depth of the complete state graph search is 21.
+@!@!@ENDMSG 2194 @!@!@
+@!@!@STARTMSG 2186:0 @!@!@
+Finished. (2015-04-04 21:08:56)
+@!@!@ENDMSG 2186 @!@!@
