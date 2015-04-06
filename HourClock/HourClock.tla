@@ -1,6 +1,8 @@
 ----------------------- MODULE HourClock -------------------------
 EXTENDS Integers, TLC  \* Only need Naturals unless doing the assert with "Int"
 
+\* Based on the HourClock TLA+ example in Ch. 2 of "Specifying Systems"
+
 (*
 --algorithm HourClock {
   variables 
