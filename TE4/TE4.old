@@ -22,17 +22,15 @@ AppendAll(to, from) == [j \in 1..(Len(from) + Len(to)) |-> IF j <= Len(to) THEN 
     dummy = "REMOVE ME";
 
 
-  macro Drain(to, from) {
+  macro TransferAll(to, from) {
     to := AppendAll(to, from);
     from := << >>;  \* drained
   }
 
-(*  
-  macro SendFirst(to, from) {
+  macro TransferOne(to, from) {
     to := Append(to, Head(from));
     from := Tail(from);    
   }
-*)
 
   process (Inbounder = "inbounder") 
     variables inmsg;
@@ -40,18 +38,18 @@ AppendAll(to, from) == [j \in 1..(Len(from) + Len(to)) |-> IF j <= Len(to) THEN 
   in1:  while (TRUE) {
           \* TODO: when there are multiple JMSSources, need a `with` clause here to randomly choose one
           await Len(sentUnacked) > 0 /\ Len(ringBuffer) < RingBufSz;  \* could increase to larger # to ensure batching
-          print <<ringBuffer, "<=RB==== BEFORE Drain ===SA=>", sentUnacked>>;  
 
-          \* if ( (RingBufSz - Len(ringBuffer)) >= Len(sentUnacked) ) {
-          Drain(ringBuffer, sentUnacked);  \* simulates putting on in batches          
-          print <<ringBuffer, "<=RB==== AFTER Drain ===SA=>", sentUnacked>>;
+          if ( (RingBufSz - Len(ringBuffer)) >= Len(sentUnacked) ) {
+            print <<ringBuffer, "<=RB==== BEFORE Drain ===SA=>", sentUnacked>>;          
+            TransferAll(ringBuffer, sentUnacked);  \* simulates putting on in batches          
+            print <<ringBuffer, "<=RB==== AFTER Drain ===SA=>", sentUnacked>>;
             
-          \* } else {
+           } else {
+            print <<ringBuffer, "<=RB==== ++BEFORE SendFirst ===SA=>", sentUnacked>>;
             \* just do one message transfer
-          \*  ringBuffer := Append(ringBuffer, Head(sentUnacked));
-          \*  sentUnacked := Tail(sentUnacked);
-          \*  print <<ringBuffer, "<=RB==== AFTER SendFirst ===SA=>", sentUnacked>>;
-          \* }
+            TransferOne(ringBuffer, sentUnacked);
+            print <<ringBuffer, "<=RB==== ++AFTER SendFirst ===SA=>", sentUnacked>>;
+          }
         }
   };  \* end process Inbounder
 
@@ -115,10 +113,15 @@ Init == (* Global variables *)
         /\ ack = defaultInitValue
 
 Inbounder == /\ Len(sentUnacked) > 0 /\ Len(ringBuffer) < RingBufSz
-             /\ PrintT(<<ringBuffer, "<=RB==== BEFORE Drain ===SA=>", sentUnacked>>)
-             /\ ringBuffer' = AppendAll(ringBuffer, sentUnacked)
-             /\ sentUnacked' = << >>
-             /\ PrintT(<<ringBuffer', "<=RB==== AFTER Drain ===SA=>", sentUnacked'>>)
+             /\ IF (RingBufSz - Len(ringBuffer)) >= Len(sentUnacked)
+                   THEN /\ PrintT(<<ringBuffer, "<=RB==== BEFORE Drain ===SA=>", sentUnacked>>)
+                        /\ ringBuffer' = AppendAll(ringBuffer, sentUnacked)
+                        /\ sentUnacked' = << >>
+                        /\ PrintT(<<ringBuffer', "<=RB==== AFTER Drain ===SA=>", sentUnacked'>>)
+                   ELSE /\ PrintT(<<ringBuffer, "<=RB==== ..BEFORE SendFirst ===SA=>", sentUnacked>>)
+                        /\ ringBuffer' = Append(ringBuffer, Head(sentUnacked))
+                        /\ sentUnacked' = Tail(sentUnacked)
+                        /\ PrintT(<<ringBuffer', "<=RB==== ..AFTER SendFirst ===SA=>", sentUnacked'>>)
              /\ UNCHANGED << source, ackChan, sentAcked, dummy, inmsg_, uid, 
                              inmsg, ack >>
 
@@ -136,7 +139,7 @@ JMSSource == /\ \/ /\ \E msg \in Msg:
                    /\ ackChan' = Tail(ackChan)
                    /\ inmsg' = Head(sentUnacked)
                    /\ Assert(ack' = inmsg'[1], 
-                             "Failure of assertion at line 83, column 13.")
+                             "Failure of assertion at line 84, column 13.")
                    /\ sentUnacked' = Tail(sentUnacked)
                    /\ sentAcked' = Append(sentAcked, inmsg')
                    /\ UNCHANGED <<source, uid>>
