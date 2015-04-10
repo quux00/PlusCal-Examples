@@ -1,0 +1,50 @@
+-------------------------- MODULE TE4 ---------------------------
+EXTENDS Integers, Sequences, TLC
+CONSTANT Msg
+
+(******************************************************)
+(*     Translation Engine 4 Algorithm Abstraction     *)
+(******************************************************)
+
+Remove(i, seq) == [j \in 1..(Len(seq)-1) |-> IF j < i THEN seq[j] ELSE seq[j+1]]
+
+(*
+--algorithm TE4 {
+  variables
+    msgid = 0,
+    source = <<>>, \* starting source of messages
+    sentUnacked = <<>>, ackChan = <<>>, sentAcked = <<>>,
+    ringBuffer = <<>>,
+    receivedUnacked = <<>>,
+    sink = <<>>;  \* final desitination
+
+  macro SendOne(from, to) {
+    chan := Append(chan, m);
+  }
+
+(*  
+  macro CopyAll(from, to) {
+  
+  }
+*)
+
+  process (JMSSource = "jmsSource") {
+  js1:  while (TRUE) {
+          either with (msg \in Msg) {
+            uid := uid + 1;
+            source := Append(source, <msgid, m>);
+          } or {
+            await Len(source) > 0;
+            inmsg := Head(source);
+            source := Tail(source);
+            sentUnacked := Append(sentUnacked, inmsg);
+          };
+        }
+  }; \* end process JMSSource
+}
+*)
+\* BEGIN TRANSLATION
+
+\* END TRANSLATION
+
+=================================================================
