@@ -64,22 +64,31 @@ SendAcks(to, from) == [j \in 1..(Len(to) + Len(from)) |-> IF j <= Len(to) THEN t
   (*---- Outbounder ----*)
   (*--------------------*)
   process (Outbounder = "outbounder")
-    variables ackBuf = << >>;  \* nextEvent, 
+    variables nextEvent; \* ackBuf = << >>, 
   {
   ob1:  while (TRUE) {
           await Len(qRingBuffer) > 0;
-          \** TODO: need to have multiple sinks and route the output to the correct one ...
-          TransferOne(qRcvdUnacked, qRingBuffer);
-          \* if endOfBatch=true, then send acks
-          if (((uid + 1) % outBatchSize) = 0) {
-  ob2:      ackChan := SendAcks(ackChan, qRcvdUnacked);
-            TransferAll(qRcvdAcked, qRcvdUnacked);
-            print <<"qsource:", Len(qSource), "qSentAcked", Len(qSentAcked), "qRcvdAcked", Len(qRcvdAcked)>>;
-            assert \A idx \in 1..Len(qRcvdAcked) : (qRcvdAcked[idx][1] = idx);
-            if (Len(qRcvdAcked) > 9) {
-              print <<"================= qRcvdAcked", qRcvdAcked>>;
+          nextEvent := Head(qRingBuffer);
+          
+          if (nextEvent[1] < 0) { \* simulate BAD_PARSE
+            print <<"OUTBOUNDER: BAD_PARSE ++++++++++">>;
+            \* pull the bad message off the ringBuffer and put on the ackChan
+            qRingBuffer := Tail(qRingBuffer);
+            ackChan := Append(ackChan, nextEvent[1]);
+          } else {
+            \** TODO: need to have multiple sinks and route the output to the correct one ...
+            TransferOne(qRcvdUnacked, qRingBuffer);
+            
+  ob2:      if (((nextEvent[1]) % outBatchSize) = 0) { \* if endOfBatch=true, send acks
+              ackChan := SendAcks(ackChan, qRcvdUnacked);
+              TransferAll(qRcvdAcked, qRcvdUnacked);
+              print <<"qsource:", Len(qSource), "qSentAcked", Len(qSentAcked), "qRcvdAcked", Len(qRcvdAcked)>>;
+              assert \A idx \in 1..Len(qRcvdAcked) : (qRcvdAcked[idx][1] = idx);
+  \*            if (Len(qRcvdAcked) > 9) {
+  \*              print <<"================= qRcvdAcked", qRcvdAcked>>;
+  \*            };
             };
-          };
+          }
         } 
   }; \* end process Outbounder
 
@@ -113,6 +122,12 @@ SendAcks(to, from) == [j \in 1..(Len(to) + Len(from)) |-> IF j <= Len(to) THEN t
             (* JMS queue receives messages from unspecified upstream system (Live) *)
             qSource := Append(qSource, <<uid, msg>>);
             uid := uid + 1;
+
+          } or with (msg \in Msg) {
+            (* JMS queue bad receives messages from unspecified upstream system (Live) *)
+            await (uid % 4 = 0);
+            \* negative UID indicates "BAD_PARSE"
+            qSource := Append(qSource, <<-100, msg>>);
             
           } or {
             (* read acks from Outbounder *)
@@ -121,8 +136,9 @@ SendAcks(to, from) == [j \in 1..(Len(to) + Len(from)) |-> IF j <= Len(to) THEN t
             ackChan := Tail(ackChan);
             inmsg := Head(qSentUnacked);
             \* ensure that acks return in order and match next unacked msg
-            assert ack = inmsg[1];
-            
+            if (ack >= 0) {
+              assert ack = inmsg[1];
+            };
             TransferOne(qSentAcked, qSentUnacked);
             
 \*          qSentUnacked := Tail(qSentUnacked);
@@ -136,11 +152,11 @@ SendAcks(to, from) == [j \in 1..(Len(to) + Len(from)) |-> IF j <= Len(to) THEN t
 \* BEGIN TRANSLATION
 CONSTANT defaultInitValue
 VARIABLES qSource, qSentUnacked, ackChan, qSentAcked, qRingBuffer, 
-          qRcvdUnacked, qRcvdAcked, outBatchSize, qEmpty, pc, ackBuf, uid, 
+          qRcvdUnacked, qRcvdAcked, outBatchSize, qEmpty, pc, nextEvent, uid, 
           inmsg, ack
 
 vars == << qSource, qSentUnacked, ackChan, qSentAcked, qRingBuffer, 
-           qRcvdUnacked, qRcvdAcked, outBatchSize, qEmpty, pc, ackBuf, uid, 
+           qRcvdUnacked, qRcvdAcked, outBatchSize, qEmpty, pc, nextEvent, uid, 
            inmsg, ack >>
 
 ProcSet == {"outbounder"} \cup {"inbounder"} \cup {"jmsSource"}
@@ -156,7 +172,7 @@ Init == (* Global variables *)
         /\ outBatchSize = 4
         /\ qEmpty = << >>
         (* Process Outbounder *)
-        /\ ackBuf = << >>
+        /\ nextEvent = defaultInitValue
         (* Process JMSSource *)
         /\ uid = 1
         /\ inmsg = defaultInitValue
@@ -167,27 +183,33 @@ Init == (* Global variables *)
 
 ob1 == /\ pc["outbounder"] = "ob1"
        /\ Len(qRingBuffer) > 0
-       /\ qRcvdUnacked' = Append(qRcvdUnacked, Head(qRingBuffer))
-       /\ qRingBuffer' = Tail(qRingBuffer)
-       /\ IF ((uid + 1) % outBatchSize) = 0
-             THEN /\ pc' = [pc EXCEPT !["outbounder"] = "ob2"]
-             ELSE /\ pc' = [pc EXCEPT !["outbounder"] = "ob1"]
-       /\ UNCHANGED << qSource, qSentUnacked, ackChan, qSentAcked, qRcvdAcked, 
-                       outBatchSize, qEmpty, ackBuf, uid, inmsg, ack >>
+       /\ nextEvent' = Head(qRingBuffer)
+       /\ IF nextEvent'[1] < 0
+             THEN /\ PrintT(<<"OUTBOUNDER: BAD_PARSE ++++++++++">>)
+                  /\ qRingBuffer' = Tail(qRingBuffer)
+                  /\ ackChan' = Append(ackChan, nextEvent'[1])
+                  /\ pc' = [pc EXCEPT !["outbounder"] = "ob1"]
+                  /\ UNCHANGED qRcvdUnacked
+             ELSE /\ qRcvdUnacked' = Append(qRcvdUnacked, Head(qRingBuffer))
+                  /\ qRingBuffer' = Tail(qRingBuffer)
+                  /\ pc' = [pc EXCEPT !["outbounder"] = "ob2"]
+                  /\ UNCHANGED ackChan
+       /\ UNCHANGED << qSource, qSentUnacked, qSentAcked, qRcvdAcked, 
+                       outBatchSize, qEmpty, uid, inmsg, ack >>
 
 ob2 == /\ pc["outbounder"] = "ob2"
-       /\ ackChan' = SendAcks(ackChan, qRcvdUnacked)
-       /\ qRcvdAcked' = AppendAll(qRcvdAcked, qRcvdUnacked)
-       /\ qRcvdUnacked' = << >>
-       /\ PrintT(<<"qsource:", Len(qSource), "qSentAcked", Len(qSentAcked), "qRcvdAcked", Len(qRcvdAcked')>>)
-       /\ Assert(\A idx \in 1..Len(qRcvdAcked') : (qRcvdAcked'[idx][1] = idx), 
-                 "Failure of assertion at line 78, column 13.")
-       /\ IF Len(qRcvdAcked') > 9
-             THEN /\ PrintT(<<"================= qRcvdAcked", qRcvdAcked'>>)
+       /\ IF ((nextEvent[1]) % outBatchSize) = 0
+             THEN /\ ackChan' = SendAcks(ackChan, qRcvdUnacked)
+                  /\ qRcvdAcked' = AppendAll(qRcvdAcked, qRcvdUnacked)
+                  /\ qRcvdUnacked' = << >>
+                  /\ PrintT(<<"qsource:", Len(qSource), "qSentAcked", Len(qSentAcked), "qRcvdAcked", Len(qRcvdAcked')>>)
+                  /\ Assert(\A idx \in 1..Len(qRcvdAcked') : (qRcvdAcked'[idx][1] = idx), 
+                            "Failure of assertion at line 86, column 15.")
              ELSE /\ TRUE
+                  /\ UNCHANGED << ackChan, qRcvdUnacked, qRcvdAcked >>
        /\ pc' = [pc EXCEPT !["outbounder"] = "ob1"]
        /\ UNCHANGED << qSource, qSentUnacked, qSentAcked, qRingBuffer, 
-                       outBatchSize, qEmpty, ackBuf, uid, inmsg, ack >>
+                       outBatchSize, qEmpty, nextEvent, uid, inmsg, ack >>
 
 Outbounder == ob1 \/ ob2
 
@@ -202,7 +224,7 @@ ib1 == /\ pc["inbounder"] = "ib1"
                   /\ qSource' = Tail(qSource)
        /\ pc' = [pc EXCEPT !["inbounder"] = "ib1"]
        /\ UNCHANGED << ackChan, qSentAcked, qRcvdUnacked, qRcvdAcked, 
-                       outBatchSize, qEmpty, ackBuf, uid, inmsg, ack >>
+                       outBatchSize, qEmpty, nextEvent, uid, inmsg, ack >>
 
 Inbounder == ib1
 
@@ -211,18 +233,24 @@ js1 == /\ pc["jmsSource"] = "js1"
                   /\ qSource' = Append(qSource, <<uid, msg>>)
                   /\ uid' = uid + 1
              /\ UNCHANGED <<qSentUnacked, ackChan, qSentAcked, inmsg, ack>>
+          \/ /\ \E msg \in Msg:
+                  /\ (uid % 4 = 0)
+                  /\ qSource' = Append(qSource, <<-100, msg>>)
+             /\ UNCHANGED <<qSentUnacked, ackChan, qSentAcked, uid, inmsg, ack>>
           \/ /\ Len(ackChan) > 0
              /\ ack' = Head(ackChan)
              /\ ackChan' = Tail(ackChan)
              /\ inmsg' = Head(qSentUnacked)
-             /\ Assert(ack' = inmsg'[1], 
-                       "Failure of assertion at line 124, column 13.")
+             /\ IF ack' >= 0
+                   THEN /\ Assert(ack' = inmsg'[1], 
+                                  "Failure of assertion at line 140, column 15.")
+                   ELSE /\ TRUE
              /\ qSentAcked' = Append(qSentAcked, Head(qSentUnacked))
              /\ qSentUnacked' = Tail(qSentUnacked)
              /\ UNCHANGED <<qSource, uid>>
        /\ pc' = [pc EXCEPT !["jmsSource"] = "js1"]
        /\ UNCHANGED << qRingBuffer, qRcvdUnacked, qRcvdAcked, outBatchSize, 
-                       qEmpty, ackBuf >>
+                       qEmpty, nextEvent >>
 
 JMSSource == js1
 
