@@ -3,6 +3,11 @@ EXTENDS Integers, Sequences, TLC
 CONSTANTS Msg, RingBufSz
 ASSUME RingBufSz \in Int
 
+(******************************************************)
+(*     Translation Engine 4 Algorithm Abstraction     *)
+(******************************************************)
+
+
 AppendAll(to, from) == [j \in 1..(Len(to) + Len(from)) |-> IF j <= Len(to) THEN to[j] ELSE from[j-Len(to)]]
 
 (*-------------------------------------------------------------------------*)
@@ -14,11 +19,7 @@ AppendAll(to, from) == [j \in 1..(Len(to) + Len(from)) |-> IF j <= Len(to) THEN 
 SendAcks(to, from) == [j \in 1..(Len(to) + Len(from)) |-> IF j <= Len(to) THEN to[j] ELSE from[j-Len(to)][1]]
 
 
-(******************************************************)
-(*     Translation Engine 4 Algorithm Abstraction     *)
-(******************************************************)
-
-(*
+(***************************************************************************
 --algorithm TE4 {
   variables
     qSource = << >>,       \* starting source of messages
@@ -32,7 +33,7 @@ SendAcks(to, from) == [j \in 1..(Len(to) + Len(from)) |-> IF j <= Len(to) THEN t
     qEmpty = << >>;
 
   macro CopyAll(to, from) {
-    to := AppendAll(to, from);    
+    to := AppendAll(to, from);
   }
 
   macro TransferAll(to, from) {
@@ -59,23 +60,32 @@ SendAcks(to, from) == [j \in 1..(Len(to) + Len(from)) |-> IF j <= Len(to) THEN t
     from := Tail(from);  
   }
 
+  (*--------------------*)
+  (*---- Outbounder ----*)
+  (*--------------------*)
   process (Outbounder = "outbounder")
     variables ackBuf = << >>;  \* nextEvent, 
   {
   ob1:  while (TRUE) {
           await Len(qRingBuffer) > 0;
-          \* nextEvent := Head(qRingBuffer);  \** TODO: why do we need this?
           \** TODO: need to have multiple sinks and route the output to the correct one ...
           TransferOne(qRcvdUnacked, qRingBuffer);
           \* if endOfBatch=true, then send acks
           if (((uid + 1) % outBatchSize) = 0) {
   ob2:      ackChan := SendAcks(ackChan, qRcvdUnacked);
             TransferAll(qRcvdAcked, qRcvdUnacked);
-            print <<"OUTBOUNDER: qRcvdAcked", qRcvdAcked>>;
+            print <<"qsource:", Len(qSource), "qSentAcked", Len(qSentAcked), "qRcvdAcked", Len(qRcvdAcked)>>;
+            assert \A idx \in 1..Len(qRcvdAcked) : (qRcvdAcked[idx][1] = idx);
+            if (Len(qRcvdAcked) > 9) {
+              print <<"================= qRcvdAcked", qRcvdAcked>>;
+            };
           };
         } 
   }; \* end process Outbounder
 
+  (*-------------------*)
+  (*---- Inbounder ----*)
+  (*-------------------*)
   process (Inbounder = "inbounder") 
   {
   ib1:  while (TRUE) {
@@ -84,23 +94,24 @@ SendAcks(to, from) == [j \in 1..(Len(to) + Len(from)) |-> IF j <= Len(to) THEN t
 
           (* get messages from JMSSource -> RingBuffer *)
           if ( (RingBufSz - Len(qRingBuffer)) >= Len(qSentUnacked) ) {
-            DuplexTransferAll(qSentUnacked, qRingBuffer, qSource);            
-            \* qRingBuffer := AppendAll(qRingBuffer, qSentUnacked);  \* simulates putting on in batches                      
+            DuplexTransferAll(qSentUnacked, qRingBuffer, qSource);
           } else {
-            DuplexTransferOne(qSentUnacked, qRingBuffer, qSource);            
-            \* qRingBuffer := Append(qRingBuffer, Head(qSentUnacked));
+            DuplexTransferOne(qSentUnacked, qRingBuffer, qSource);
           };
         }
   };  \* end process Inbounder
 
+
+  (*--------------------*)
+  (*---- JMS Source ----*)
+  (*--------------------*)  
   process (JMSSource = "jmsSource")  \* TODO: there can be multiples of these
-    variables uid = 0, inmsg, ack;
+    variables uid = 1, inmsg, ack;
   {
   js1:  while (TRUE) {
           either with (msg \in Msg) {
             (* JMS queue receives messages from unspecified upstream system (Live) *)
             qSource := Append(qSource, <<uid, msg>>);
-            \* print <<uid, msg>>;
             uid := uid + 1;
             
           } or {
@@ -111,14 +122,17 @@ SendAcks(to, from) == [j \in 1..(Len(to) + Len(from)) |-> IF j <= Len(to) THEN t
             inmsg := Head(qSentUnacked);
             \* ensure that acks return in order and match next unacked msg
             assert ack = inmsg[1];
-            qSentUnacked := Tail(qSentUnacked);
-            qSentAcked := Append(qSentAcked, inmsg);
-            \* print <<" .... ACK RECVD:", ack>>
+            
+            TransferOne(qSentAcked, qSentUnacked);
+            
+\*          qSentUnacked := Tail(qSentUnacked);
+\*          qSentAcked := Append(qSentAcked, inmsg);
           };
         }
   }; \* end process JMSSource
 }
-*)
+
+****************************************************************************)
 \* BEGIN TRANSLATION
 CONSTANT defaultInitValue
 VARIABLES qSource, qSentUnacked, ackChan, qSentAcked, qRingBuffer, 
@@ -165,7 +179,12 @@ ob2 == /\ pc["outbounder"] = "ob2"
        /\ ackChan' = SendAcks(ackChan, qRcvdUnacked)
        /\ qRcvdAcked' = AppendAll(qRcvdAcked, qRcvdUnacked)
        /\ qRcvdUnacked' = << >>
-       /\ PrintT(<<"OUTBOUNDER: qRcvdAcked", qRcvdAcked'>>)
+       /\ PrintT(<<"qsource:", Len(qSource), "qSentAcked", Len(qSentAcked), "qRcvdAcked", Len(qRcvdAcked')>>)
+       /\ Assert(\A idx \in 1..Len(qRcvdAcked') : (qRcvdAcked'[idx][1] = idx), 
+                 "Failure of assertion at line 78, column 13.")
+       /\ IF Len(qRcvdAcked') > 9
+             THEN /\ PrintT(<<"================= qRcvdAcked", qRcvdAcked'>>)
+             ELSE /\ TRUE
        /\ pc' = [pc EXCEPT !["outbounder"] = "ob1"]
        /\ UNCHANGED << qSource, qSentUnacked, qSentAcked, qRingBuffer, 
                        outBatchSize, qEmpty, ackBuf, uid, inmsg, ack >>
@@ -197,9 +216,9 @@ js1 == /\ pc["jmsSource"] = "js1"
              /\ ackChan' = Tail(ackChan)
              /\ inmsg' = Head(qSentUnacked)
              /\ Assert(ack' = inmsg'[1], 
-                       "Failure of assertion at line 113, column 13.")
+                       "Failure of assertion at line 124, column 13.")
+             /\ qSentAcked' = Append(qSentAcked, Head(qSentUnacked))
              /\ qSentUnacked' = Tail(qSentUnacked)
-             /\ qSentAcked' = Append(qSentAcked, inmsg')
              /\ UNCHANGED <<qSource, uid>>
        /\ pc' = [pc EXCEPT !["jmsSource"] = "js1"]
        /\ UNCHANGED << qRingBuffer, qRcvdUnacked, qRcvdAcked, outBatchSize, 
@@ -212,5 +231,6 @@ Next == Outbounder \/ Inbounder \/ JMSSource
 Spec == Init /\ [][Next]_vars
 
 \* END TRANSLATION
+
 
 =================================================================
