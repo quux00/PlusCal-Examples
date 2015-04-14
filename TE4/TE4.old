@@ -75,6 +75,7 @@ SendAcks(to, from) == [j \in 1..(Len(to) + Len(from)) |-> IF j <= Len(to) THEN t
             \* pull the bad message off the ringBuffer and put on the ackChan
             qRingBuffer := Tail(qRingBuffer);
             ackChan := Append(ackChan, nextEvent[1]);
+            
           } else {
             \** TODO: need to have multiple sinks and route the output to the correct one ...
             TransferOne(qRcvdUnacked, qRingBuffer);
@@ -119,24 +120,26 @@ SendAcks(to, from) == [j \in 1..(Len(to) + Len(from)) |-> IF j <= Len(to) THEN t
   {
   js1:  while (TRUE) {
           either with (msg \in Msg) {
-            (* JMS queue receives messages from unspecified upstream system (Live) *)
+            (* JMS queue receives messages from upstream system (Live) *)
             qSource := Append(qSource, <<uid, msg>>);
             uid := uid + 1;
 
           } or with (msg \in Msg) {
-            (* JMS queue bad receives messages from unspecified upstream system (Live) *)
-            await (uid % 4 = 0);
+            (* JMS queue bad receives messages from upstream system (Live) *)
+            await (uid % 4 = 1);
             \* negative UID indicates "BAD_PARSE"
             qSource := Append(qSource, <<-100, msg>>);
             
           } or {
             (* read acks from Outbounder *)
             await Len(ackChan) > 0;
+            print <<qSentUnacked, "<<-qSentUnacked", "ackChan->>", ackChan>>;
             ack := Head(ackChan);
             ackChan := Tail(ackChan);
             inmsg := Head(qSentUnacked);
             \* ensure that acks return in order and match next unacked msg
             if (ack >= 0) {
+              print <<ack, "<==ack", "inmsg[1]==>", inmsg[1]>>;
               assert ack = inmsg[1];
             };
             TransferOne(qSentAcked, qSentUnacked);
@@ -241,10 +244,14 @@ js1 == /\ pc["jmsSource"] = "js1"
              /\ ack' = Head(ackChan)
              /\ ackChan' = Tail(ackChan)
              /\ inmsg' = Head(qSentUnacked)
-             /\ Assert(ack' = inmsg'[1] \/ ack' < 0, 
-                       "Failure of assertion at line 139, column 13.")
-             /\ qSentAcked' = Append(qSentAcked, Head(qSentUnacked))
-             /\ qSentUnacked' = Tail(qSentUnacked)
+             /\ IF ack' >= 0
+                   THEN /\ PrintT(<<ack', "<==ack", "inmsg[1]==>", inmsg'[1]>>)
+                        /\ Assert(ack' = inmsg'[1], 
+                                  "Failure of assertion at line 141, column 15.")
+                        /\ qSentAcked' = Append(qSentAcked, Head(qSentUnacked))
+                        /\ qSentUnacked' = Tail(qSentUnacked)
+                   ELSE /\ TRUE
+                        /\ UNCHANGED << qSentUnacked, qSentAcked >>
              /\ UNCHANGED <<qSource, uid>>
        /\ pc' = [pc EXCEPT !["jmsSource"] = "js1"]
        /\ UNCHANGED << qRingBuffer, qRcvdUnacked, qRcvdAcked, outBatchSize, 
